@@ -10,33 +10,37 @@ From here you can adjust the joint angles to find thetas, use the gripper to ext
 to find the position of the wrist center. These newly generated test cases can be added to the test_cases dictionary.
 '''
 
-test_cases = {1:[[[2.16135,-1.42635,1.55109],
-                  [0.708611,0.186356,-0.157931,0.661967]],
-                  [1.89451,-1.44302,1.69366],
-                  [-0.65,0.45,-0.36,0.95,0.79,0.49]],
-              2:[[[-0.56754,0.93663,3.0038],
-                  [0.62073, 0.48318,0.38759,0.480629]],
-                  [-0.638,0.64198,2.9988],
-                  [-0.79,-0.11,-2.33,1.94,1.14,-3.68]],
-              3:[[[-1.3863,0.02074,0.90986],
-                  [0.01735,-0.2179,0.9025,0.371016]],
-                  [-1.1669,-0.17989,0.85137],
-                  [-2.99,-0.12,0.94,4.06,1.29,-4.12]],
-              4:[],
-              5:[]}
+test_cases = {
+    0: [[[2.16135, -1.42635, 1.55109],
+         [0.708611, 0.186356, -0.157931, 0.661967]],
+        [1.89451, -1.44302, 1.69366],
+        [-0.65, 0.45, -0.36, 0.95, 0.79, 0.49]],
+    1: [[[-0.56754, 0.93663, 3.0038],
+         [0.62073, 0.48318, 0.38759, 0.480629]],
+        [-0.638, 0.64198, 2.9988],
+        [-0.79, -0.11, -2.33, 1.94, 1.14, -3.68]],
+    2: [[[-1.3863, 0.02074, 0.90986],
+         [0.01735, -0.2179, 0.9025, 0.371016]],
+        [-1.1669, -0.17989, 0.85137],
+        [-2.99, -0.12, 0.94, 4.06, 1.29, -4.12]],
+    3: [],
+    4: []
+}
 
 
 def test_code(test_case):
-    ## Set up code
-    ## Do not modify!
+    # Set up code
+    # Do not modify!
     x = 0
+
     class Position:
-        def __init__(self,EE_pos):
+        def __init__(self, EE_pos):
             self.x = EE_pos[0]
             self.y = EE_pos[1]
             self.z = EE_pos[2]
+
     class Orientation:
-        def __init__(self,EE_ori):
+        def __init__(self, EE_ori):
             self.x = EE_ori[0]
             self.y = EE_ori[1]
             self.z = EE_ori[2]
@@ -46,24 +50,38 @@ def test_code(test_case):
     orientation = Orientation(test_case[0][1])
 
     class Combine:
-        def __init__(self,position,orientation):
+        def __init__(self, position, orientation):
             self.position = position
             self.orientation = orientation
 
-    comb = Combine(position,orientation)
+    comb = Combine(position, orientation)
 
     class Pose:
-        def __init__(self,comb):
+        def __init__(self, comb):
             self.poses = [comb]
 
     req = Pose(comb)
     start_time = time()
-    
-    ########################################################################################
-    ## 
 
-    ## Insert IK code here!
-    
+    ########################################################################################
+    ##
+
+    # Insert IK code here!
+    d1, d2, d3, d4, d5, d6, d7 = symbols('d1:8') # link offset
+    a0, a1, a2, a3, a4, a5, a6 = symbols('a0:7') # link length
+    alpha0, alpha1, alpha2, alpha3, alpha4, alpha5, alpha6 = symbols('alpha0:7') # twist angle
+    # Joint angle symbols
+    q1, q2, q3, q4, q5, q6, q7, q8 = symbols('q1:8')
+
+    DH_Table = {
+        alpha0:      0, a0:      0, d1: 0.75, q1: q1,
+        alpha1: -pi/2., a1:   0.35, d2: 0, q2: q2 - pi / 2
+        alpha2:      0, a2:   1.25, d2: 0, q2: q2 - pi / 2
+        alpha3: -pi/2., a3: -0.054, d2: 0, q2: q2 - pi / 2
+        alpha4: -pi/2., a4:      0, d2: 0, q2: q2 - pi / 2
+        alpha5: -pi/2., a5:      0, d2: 0, q2: q2 - pi / 2
+        alpha6:      0, a6:      0, d2: 0, q2: q2 - pi / 2
+    }
     theta1 = 0
     theta2 = 0
     theta3 = 0
@@ -71,28 +89,30 @@ def test_code(test_case):
     theta5 = 0
     theta6 = 0
 
-    ## 
-    ########################################################################################
-    
-    ########################################################################################
-    ## For additional debugging add your forward kinematics here. Use your previously calculated thetas
-    ## as the input and output the position of your end effector as your_ee = [x,y,z]
-
-    ## (OPTIONAL) YOUR CODE HERE!
-
-    ## End your code input for forward kinematics here!
+    ##
     ########################################################################################
 
-    ## For error analysis please set the following variables of your WC location and EE location in the format of [x,y,z]
-    your_wc = [1,1,1] # <--- Load your calculated WC values in this array
-    your_ee = [1,1,1] # <--- Load your calculated end effector value from your forward kinematics
+    ########################################################################################
+    # For additional debugging add your forward kinematics here. Use your previously calculated thetas
+    # as the input and output the position of your end effector as your_ee = [x,y,z]
+
+    # (OPTIONAL) YOUR CODE HERE!
+
+    # End your code input for forward kinematics here!
     ########################################################################################
 
-    ## Error analysis
-    print ("\nTotal run time to calculate joint angles from pose is %04.4f seconds" % (time()-start_time))
+    # For error analysis please set the following variables of your WC location and EE location in the format of [x,y,z]
+    your_wc = [1, 1, 1]  # <--- Load your calculated WC values in this array
+    # <--- Load your calculated end effector value from your forward kinematics
+    your_ee = [1, 1, 1]
+    ########################################################################################
+
+    # Error analysis
+    print ("\nTotal run time to calculate joint angles from pose is %04.4f seconds" % (
+        time()-start_time))
 
     # Find WC error
-    if not(sum(your_wc)==3):
+    if not(sum(your_wc) == 3):
         wc_x_e = abs(your_wc[0]-test_case[1][0])
         wc_y_e = abs(your_wc[1]-test_case[1][1])
         wc_z_e = abs(your_wc[2]-test_case[1][2])
@@ -121,7 +141,7 @@ def test_code(test_case):
     print (" ")
 
     # Find FK EE error
-    if not(sum(your_ee)==3):
+    if not(sum(your_ee) == 3):
         ee_x_e = abs(your_ee[0]-test_case[0][0][0])
         ee_y_e = abs(your_ee[1]-test_case[0][0][1])
         ee_z_e = abs(your_ee[2]-test_case[0][0][2])
@@ -132,10 +152,7 @@ def test_code(test_case):
         print ("Overall end effector offset is: %04.8f units \n" % ee_offset)
 
 
-
-
 if __name__ == "__main__":
     # Change test case number for different scenarios
-    test_case_number = 1
-
-    test_code(test_cases[test_case_number])
+    for idx in range(3):
+        test_code(test_cases[idx])

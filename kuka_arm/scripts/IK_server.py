@@ -25,23 +25,22 @@ def handle_calculate_IK(req):
         print "No valid poses received"
         return -1
     else:
-
-        ### Your FK code here
+        joint_trajectory_list[]
         # Create symbols
-	#
-	#
-	# Create Modified DH parameters
-	#
-	#
-	# Define Modified DH Transformation matrix
-	#
-	#
-	# Create individual transformation matrices
-	#
-	#
-	# Extract rotation matrices from the transformation matrices
-	#
-	#
+        #
+        #
+        # Create Modified DH parameters
+        #
+        #
+        # Define Modified DH Transformation matrix
+        #
+        #
+        # Create individual transformation matrices
+        #
+        #
+        # Extract rotation matrices from the transformation matrices
+        #
+        #
         ###
 
         # Initialize service response
