@@ -74,13 +74,13 @@ def test_code(test_case):
     q1, q2, q3, q4, q5, q6, q7 = symbols('q1:8')
 
     DH_Table = {
-        alpha0:      0, a0:      0, d1: 0.75, q1: q1,
-        alpha1: -pi/2., a1:   0.35, d2: 0, q2: q2 - pi / 2,
-        alpha2:      0, a2:   1.25, d2: 0, q2: q2 - pi / 2,
-        alpha3: -pi/2., a3: -0.054, d2: 0, q2: q2 - pi / 2,
-        alpha4: -pi/2., a4:      0, d2: 0, q2: q2 - pi / 2,
-        alpha5: -pi/2., a5:      0, d2: 0, q2: q2 - pi / 2,
-        alpha6:      0, a6:      0, d2: 0, q2: q2 - pi / 2,
+        alpha0:      0, a0:      0, d1:  0.75, q1: q1,
+        alpha1: -pi/2., a1:   0.35, d2:     0, q2: q2 - pi / 2,
+        alpha2:      0, a2:   1.25, d3:     0, q3: q3,
+        alpha3: -pi/2., a3: -0.054, d4:   1.5, q4: q4,
+        alpha4: -pi/2., a4:      0, d5:     0, q5: q5,
+        alpha5: -pi/2., a5:      0, d6:     0, q6: q6,
+        alpha6:      0, a6:      0, d7: 0.303, q7: 0,
     }
 
     def TF_Matrix(alpha, a, d, q):
@@ -141,7 +141,7 @@ def test_code(test_case):
 
     ROT_EE = ROT_z * ROT_y * ROT_x
 
-    Rot_Error = ROT_z.subs(y, radians(100)) * ROT_y.subs(p, radians(-90))
+    Rot_Error = ROT_z.subs(y, radians(180)) * ROT_y.subs(p, radians(-90))
 
     ROT_EE = ROT_EE * Rot_Error
     ROT_EE = ROT_EE.subs({'r': roll, 'p': pitch, 'y': yaw})
