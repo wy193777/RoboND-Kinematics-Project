@@ -158,16 +158,16 @@ def test_code(test_case):
     theta1 = atan2(WC[1], WC[0])
 
     # SSS triangle for theta2 and theta3
-    side_a = 1.501
-    side_b = sqrt(pow(sqrt((WC[0] *  WC[0] + WC[1] * WC[1]) - 0.35), 2) + pow((WC[2] - 0.75), 2))
-    side_c = 1.25
+    A = 1.501
+    B = sqrt(pow(sqrt((WC[0] ** 2 + WC[1] ** 2) - 0.35), 2) + pow((WC[2] - 0.75), 2))
+    C = 1.25
 
-    angle_a = acos((side_b ** 2 + side_c ** 2 - side_a ** 2) / (2 * side_b * side_c))
-    angle_b = acos((side_a ** 2 + side_c ** 2 - side_b ** 2) / (2 * side_a * side_c))
-    angle_c = acos((side_a ** 2 + side_b ** 2 - side_c ** 2) / (2 * side_a * side_b))
+    a = acos((B ** 2 + C ** 2 - A ** 2) / (2 * B * C))
+    b = acos((A ** 2 + C ** 2 - B ** 2) / (2 * A * C))
+    c = acos((A ** 2 + B ** 2 - C ** 2) / (2 * A * B))
 
-    theta2 = pi / 2 - angle_a - atan2(WC[2] - 0.75, sqrt(WC[0] * WC[0] + WC[1] * WC[1]) - 0.35)
-    theta3 = pi / 2 - (angle_b + 0.036)  # 0.036 accounts for sag in link4 of -0.054m
+    theta2 = pi / 2 - a - atan2(WC[2] - 0.75, sqrt(WC[0] * WC[0] + WC[1] * WC[1]) - 0.35)
+    theta3 = pi / 2 - (b + 0.036)  # 0.036 accounts for sag in link4 of -0.054m
 
     R0_3 = T0_1[0:3, 0:3] * T1_2[0:3, 0:3] * T2_3[0:3, 0:3]
     R0_3 = R0_3.evalf(subs={q1: theta1, q2: theta2, q3: theta3})
@@ -241,4 +241,6 @@ def test_code(test_case):
 if __name__ == "__main__":
     # Change test case number for different scenarios
     for idx in range(3):
+        print "Test Case {} Result".format(idx+1)
         test_code(test_cases[idx])
+        print ""
